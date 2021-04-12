@@ -83,12 +83,12 @@ ui <- (
                     
                     /* REACTABLE */
                     .reactable > div > div.rt-table > div.rt-thead.-header > div {
-                      background-color: #17408B;
+                      background-color: #cc0000;
                     }
                     .reactable > div > div.rt-table > div.rt-thead.-header > div > div.rt-align-center{
                       padding: 8px;
                       border-bottom-width: 1px;
-                      background-color: #17408B;
+                      background-color: #cc0000;
                       text-transform: uppercase;
                       font-size: 11px;
                       color: #FFF;
@@ -121,7 +121,7 @@ ui <- (
                     }
                     .nav-tabs {
                       border-bottom: 8px solid #062256;
-                      background-color: #17408B;
+                      background-color: #cc0000;
                     }
                     .nav-tabs > li > a{
                       transition: all 200ms ease-in-out;
@@ -401,42 +401,43 @@ ui <- (
                  h1("LOCKDOWN BASKETBALL: 2021 DRAFT TOOL", id="main-head"),
                  h3("TEXT TEXT TEXT", id="main-text"),
                  hr(),
-                 h5("CJ Marchesani (",tags$a(href="https://www.twitter.com/cjmarchesani", target="_blank", "@cjmarchesani"),")   |   Brett Kornfeld (",tags$a(href="https://www.twitter.com/KornHoops", target="_blank", "@KornHoops"),")   |   Gabby Herrera-Lim (", tags$a(href="https://www.gcherreralim.com", target="_blank", "gcherreralim.com"),")")
+                 h5("CJ Marchesani [",tags$a(href="https://www.twitter.com/cjmarchesani", target="_blank", "@cjmarchesani"),"]      |      Brett Kornfeld (",tags$a(href="https://www.twitter.com/KornHoops", target="_blank", "@KornHoops"),")      |      Gabby Herrera-Lim (", tags$a(href="https://www.gcherreralim.com", target="_blank", "gcherreralim.com"),")")
                  )
                )),
       
       ########## UI CODE FOR 'FEATURED BOARDS' TAB ##########
       tabPanel("Featured 2021 Boards",
-               div(
-                h1('FEATURED 2021 BOARDS'),
-                h4('Take a look at ------------------'),
-                class = "tooltabtitle", id = 'TE_tooltitle'),
-               sidebarPanel(width = 2,
-                            selectizeInput(
-                              inputId = "TEteams",
-                              label = "Select up to 10 teams:",
-                              choices = list(
-                                "2015 - 2016" = sort(unique(genteams$TeamCode[genteams$Season == 2016])),
-                                "2016 - 2017" = sort(unique(genteams$TeamCode[genteams$Season == 2017])),
-                                "2017 - 2018" = sort(unique(genteams$TeamCode[genteams$Season == 2018])),
-                                "2018 - 2019" = sort(unique(genteams$TeamCode[genteams$Season == 2019])),
-                                "2019 - 2020" = sort(unique(genteams$TeamCode[genteams$Season == 2020]))),
-                              multiple = TRUE,
-                              selected = NULL,
-                              options = list(maxItems = 10)),
-                            shiny::br(),
-                            varSelectInput("TExaxis", "X-Axis Variable", genteams[,7:36], selected="oEFF"),
-                            varSelectInput("TEyaxis", "Y-Axis Variable", genteams[,7:36], selected="WinPerc"),
-                            checkboxInput("TEall", "Show all teams", FALSE),
-                            actionButton("TE_reset", "Reset")),
-               mainPanel(width = 10,
-                 shiny::textOutput("TEChartTitle"),
-                 shiny::plotOutput("TEChart"),
-                 reactable::reactableOutput("TEtable"),
-                 br(),
-                 br(),
-                 div(style="display: inline-block; vertical-align: top; width: 200px; margin: 0 auto;",uiOutput("TE_plotdownappear"))
-               ))
+               # div(
+               #  h1('FEATURED 2021 BOARDS'),
+               #  h4('Take a look at ------------------'),
+               #  class = "tooltabtitle", id = 'TE_tooltitle'),
+               # sidebarPanel(width = 2,
+               #              selectizeInput(
+               #                inputId = "TEteams",
+               #                label = "Select up to 10 teams:",
+               #                choices = list(
+               #                  "2015 - 2016" = sort(unique(genteams$TeamCode[genteams$Season == 2016])),
+               #                  "2016 - 2017" = sort(unique(genteams$TeamCode[genteams$Season == 2017])),
+               #                  "2017 - 2018" = sort(unique(genteams$TeamCode[genteams$Season == 2018])),
+               #                  "2018 - 2019" = sort(unique(genteams$TeamCode[genteams$Season == 2019])),
+               #                  "2019 - 2020" = sort(unique(genteams$TeamCode[genteams$Season == 2020]))),
+               #                multiple = TRUE,
+               #                selected = NULL,
+               #                options = list(maxItems = 10)),
+               #              shiny::br(),
+               #              varSelectInput("TExaxis", "X-Axis Variable", genteams[,7:36], selected="oEFF"),
+               #              varSelectInput("TEyaxis", "Y-Axis Variable", genteams[,7:36], selected="WinPerc"),
+               #              checkboxInput("TEall", "Show all teams", FALSE),
+               #              actionButton("TE_reset", "Reset")),
+               # mainPanel(width = 10,
+               #   shiny::textOutput("TEChartTitle"),
+               #   shiny::plotOutput("TEChart"),
+               #   reactable::reactableOutput("TEtable"),
+               #   br(),
+               #   br(),
+               #   div(style="display: inline-block; vertical-align: top; width: 200px; margin: 0 auto;",uiOutput("TE_plotdownappear"))
+               # )
+               )
       ,
       
       
@@ -464,7 +465,7 @@ ui <- (
                                                "International" = sort(unique(playerbios$player[playerbios$year == "INT"])),
                                                "G-League" = sort(unique(playerbios$player[playerbios$year == "G"]))),
                                              multiple = FALSE,
-                                             selected = "Cade Cunningham"),
+                                             selected = ""),
                                   style = "display: inline-block; width: 300px; font-size: 10px; vertical-align: top; padding-right: 20px; text-transform: uppercase;"),
                               div(numericInput(inputId = "PT_P1_100",
                                            label = "CEILING",
@@ -672,7 +673,7 @@ ui <- (
                                                 "International" = sort(unique(playerbios$player[playerbios$year == "INT"])),
                                                 "G-League" = sort(unique(playerbios$player[playerbios$year == "G"]))),
                                               multiple = FALSE,
-                                              selected = "Kai Jones"),
+                                              selected = "Corey Kispert"),
                                   style = "display: inline-block; width: 300px; font-size: 10px; vertical-align: top; padding-right: 20px; text-transform: uppercase;"),
                               div(numericInput(inputId = "PT_P9_100",
                                                label = "CEILING",
@@ -698,7 +699,7 @@ ui <- (
                                                 "International" = sort(unique(playerbios$player[playerbios$year == "INT"])),
                                                 "G-League" = sort(unique(playerbios$player[playerbios$year == "G"]))),
                                               multiple = FALSE,
-                                              selected = "Kai Jones"),
+                                              selected = "Keon Johnson"),
                                   style = "display: inline-block; width: 300px; font-size: 10px; vertical-align: top; padding-right: 20px; text-transform: uppercase;"),
                               div(numericInput(inputId = "PT_P10_100",
                                                label = "CEILING",
@@ -724,7 +725,7 @@ ui <- (
                                                 "International" = sort(unique(playerbios$player[playerbios$year == "INT"])),
                                                 "G-League" = sort(unique(playerbios$player[playerbios$year == "G"]))),
                                               multiple = FALSE,
-                                              selected = "Kai Jones"),
+                                              selected = "Davion Mitchell"),
                                   style = "display: inline-block; width: 300px; font-size: 10px; vertical-align: top; padding-right: 20px; text-transform: uppercase;"),
                               div(numericInput(inputId = "PT_P11_100",
                                                label = "CEILING",
@@ -740,8 +741,8 @@ ui <- (
                                   style = "display: inline-block; width: 55px; font-size: 10px;"),
                               hr(),
                               ### PLAYER 12 ###
-                              div(selectInput(inputId = "PT_Player8",
-                                              label = "Select your eighth player",
+                              div(selectInput(inputId = "PT_Player12",
+                                              label = "Select your twelfth player",
                                               choices = list(
                                                 "Freshmen" = sort(unique(playerbios$player[playerbios$year == "FR"])),
                                                 "Sophomores" = sort(unique(playerbios$player[playerbios$year == "SO"])),
@@ -750,24 +751,24 @@ ui <- (
                                                 "International" = sort(unique(playerbios$player[playerbios$year == "INT"])),
                                                 "G-League" = sort(unique(playerbios$player[playerbios$year == "G"]))),
                                               multiple = FALSE,
-                                              selected = "Kai Jones"),
+                                              selected = "James Bouknight"),
                                   style = "display: inline-block; width: 300px; font-size: 10px; vertical-align: top; padding-right: 20px; text-transform: uppercase;"),
-                              div(numericInput(inputId = "PT_P8_100",
+                              div(numericInput(inputId = "PT_P12_100",
                                                label = "CEILING",
                                                value = 0,
                                                min = 0,
                                                max = 100,
                                                step = 1),style = "display: inline-block; width: 55px; font-size: 10px;"),
-                              div(uiOutput("PT_P8_75TH"),
+                              div(uiOutput("PT_P12_75TH"),
                                   style = "display: inline-block; width: 55px; font-size: 10px;"),
-                              div(uiOutput("PT_P8_25TH"),
+                              div(uiOutput("PT_P12_25TH"),
                                   style = "display: inline-block; width: 55px; font-size: 10px;"),
-                              div(uiOutput("PT_P8_FLOOR"),
+                              div(uiOutput("PT_P12_FLOOR"),
                                   style = "display: inline-block; width: 55px; font-size: 10px;"),
                               hr(),
                               ### PLAYER 13 ###
-                              div(selectInput(inputId = "PT_Player8",
-                                              label = "Select your eighth player",
+                              div(selectInput(inputId = "PT_Player13",
+                                              label = "Select your thirteenth player",
                                               choices = list(
                                                 "Freshmen" = sort(unique(playerbios$player[playerbios$year == "FR"])),
                                                 "Sophomores" = sort(unique(playerbios$player[playerbios$year == "SO"])),
@@ -776,24 +777,24 @@ ui <- (
                                                 "International" = sort(unique(playerbios$player[playerbios$year == "INT"])),
                                                 "G-League" = sort(unique(playerbios$player[playerbios$year == "G"]))),
                                               multiple = FALSE,
-                                              selected = "Kai Jones"),
+                                              selected = "Jaden Springer"),
                                   style = "display: inline-block; width: 300px; font-size: 10px; vertical-align: top; padding-right: 20px; text-transform: uppercase;"),
-                              div(numericInput(inputId = "PT_P8_100",
+                              div(numericInput(inputId = "PT_P13_100",
                                                label = "CEILING",
                                                value = 0,
                                                min = 0,
                                                max = 100,
                                                step = 1),style = "display: inline-block; width: 55px; font-size: 10px;"),
-                              div(uiOutput("PT_P8_75TH"),
+                              div(uiOutput("PT_P13_75TH"),
                                   style = "display: inline-block; width: 55px; font-size: 10px;"),
-                              div(uiOutput("PT_P8_25TH"),
+                              div(uiOutput("PT_P13_25TH"),
                                   style = "display: inline-block; width: 55px; font-size: 10px;"),
-                              div(uiOutput("PT_P8_FLOOR"),
+                              div(uiOutput("PT_P13_FLOOR"),
                                   style = "display: inline-block; width: 55px; font-size: 10px;"),
                               hr(),
                               ### PLAYER 14 ###
-                              div(selectInput(inputId = "PT_Player8",
-                                              label = "Select your eighth player",
+                              div(selectInput(inputId = "PT_Player14",
+                                              label = "Select your fourteenth player",
                                               choices = list(
                                                 "Freshmen" = sort(unique(playerbios$player[playerbios$year == "FR"])),
                                                 "Sophomores" = sort(unique(playerbios$player[playerbios$year == "SO"])),
@@ -802,24 +803,24 @@ ui <- (
                                                 "International" = sort(unique(playerbios$player[playerbios$year == "INT"])),
                                                 "G-League" = sort(unique(playerbios$player[playerbios$year == "G"]))),
                                               multiple = FALSE,
-                                              selected = "Kai Jones"),
+                                              selected = "Ziaire Williams"),
                                   style = "display: inline-block; width: 300px; font-size: 10px; vertical-align: top; padding-right: 20px; text-transform: uppercase;"),
-                              div(numericInput(inputId = "PT_P8_100",
+                              div(numericInput(inputId = "PT_P14_100",
                                                label = "CEILING",
                                                value = 0,
                                                min = 0,
                                                max = 100,
                                                step = 1),style = "display: inline-block; width: 55px; font-size: 10px;"),
-                              div(uiOutput("PT_P8_75TH"),
+                              div(uiOutput("PT_P14_75TH"),
                                   style = "display: inline-block; width: 55px; font-size: 10px;"),
-                              div(uiOutput("PT_P8_25TH"),
+                              div(uiOutput("PT_P14_25TH"),
                                   style = "display: inline-block; width: 55px; font-size: 10px;"),
-                              div(uiOutput("PT_P8_FLOOR"),
+                              div(uiOutput("PT_P14_FLOOR"),
                                   style = "display: inline-block; width: 55px; font-size: 10px;"),
                               hr(),
                               ### PLAYER 15 ###
-                              div(selectInput(inputId = "PT_Player8",
-                                              label = "Select your eighth player",
+                              div(selectInput(inputId = "PT_Player15",
+                                              label = "Select your fifteenth player",
                                               choices = list(
                                                 "Freshmen" = sort(unique(playerbios$player[playerbios$year == "FR"])),
                                                 "Sophomores" = sort(unique(playerbios$player[playerbios$year == "SO"])),
@@ -828,156 +829,58 @@ ui <- (
                                                 "International" = sort(unique(playerbios$player[playerbios$year == "INT"])),
                                                 "G-League" = sort(unique(playerbios$player[playerbios$year == "G"]))),
                                               multiple = FALSE,
-                                              selected = "Kai Jones"),
+                                              selected = "Josh Giddey"),
                                   style = "display: inline-block; width: 300px; font-size: 10px; vertical-align: top; padding-right: 20px; text-transform: uppercase;"),
-                              div(numericInput(inputId = "PT_P8_100",
+                              div(numericInput(inputId = "PT_P15_100",
                                                label = "CEILING",
                                                value = 0,
                                                min = 0,
                                                max = 100,
                                                step = 1),style = "display: inline-block; width: 55px; font-size: 10px;"),
-                              div(uiOutput("PT_P8_75TH"),
+                              div(uiOutput("PT_P15_75TH"),
                                   style = "display: inline-block; width: 55px; font-size: 10px;"),
-                              div(uiOutput("PT_P8_25TH"),
+                              div(uiOutput("PT_P15_25TH"),
                                   style = "display: inline-block; width: 55px; font-size: 10px;"),
-                              div(uiOutput("PT_P8_FLOOR"),
-                                  style = "display: inline-block; width: 55px; font-size: 10px;"),
+                              div(uiOutput("PT_P15_FLOOR"),
+                                  style = "display: inline-block; width: 55px; font-size: 10px;")
                               ),
                  mainPanel(width = 8,
                            tabsetPanel(
                              tabPanel("Percentile Outcome Boxplot",
-                                      plotly::plotlyOutput("PTC_PPPplot",
-                                                   height = "500px",
-                                                   width = "700px"),
-                                      shiny::hr(),
-                                      reactable::reactableOutput("PT_Board")),
-                             tabPanel("Playtype Frequency",
-                                      fluidRow(
-                                        column(2,
-                                               h5("Selected Team:", class = "PTCteamtitle"),
-                                               uiOutput("FREQselectedteam")),
-                                        column(10,
-                                               h5("Matched Teams:", class = "PTCteamtitle"),
-                                               div(class="matchcenter",
-                                               fluidRow(
-                                                 column(2,
-                                                        uiOutput("FREQteam1")),
-                                                 column(2,
-                                                        uiOutput("FREQteam2")),
-                                                 column(2,
-                                                        uiOutput("FREQteam3")),
-                                                 column(2,
-                                                        uiOutput("FREQteam4")),
-                                                 column(2,
-                                                        uiOutput("FREQteam5"))
-                                               )))),
+                                      plotOutput("PT_Box"),
                                       hr(),
-                                      plotly::plotlyOutput("PTC_FREQplot",
-                                                   height = "500px",
-                                                   width = "700px"),
-                                      shiny::hr(),
-                                      reactable::reactableOutput("PTC_FREQtable")),
-                             tabPanel("Player Bios",
-                                      fluidRow(
-                                        column(2,
-                                               h5("Selected Team:", class = "PTCteamtitle"),
-                                               uiOutput("PERCselectedteam")),
-                                        column(10,
-                                               h5("Matched Teams:", class = "PTCteamtitle"),
-                                               div(class="matchcenter",
-                                               fluidRow(
-                                                 column(2,
-                                                        uiOutput("PERCteam1")),
-                                                 column(2,
-                                                        uiOutput("PERCteam2")),
-                                                 column(2,
-                                                        uiOutput("PERCteam3")),
-                                                 column(2,
-                                                        uiOutput("PERCteam4")),
-                                                 column(2,
-                                                        uiOutput("PERCteam5"))
-                                               )))),
-                                      hr(),
-                                      plotly::plotlyOutput("PTC_PERCplot",
-                                                           height = "500px",
-                                                           width = "700px"),
-                                      shiny::hr(),
-                                      reactable::reactableOutput("PTC_PERCtable")),
-                             tabPanel("Efficiency Data",
-                                      fluidRow(
-                                        column(2,
-                                               h5("Selected Team:", class = "PTCteamtitle"),
-                                               uiOutput("EDselectedteam")),
-                                        column(10,
-                                               h5("Matched Teams:", class = "PTCteamtitle"),
-                                               div(class="matchcenter",
-                                               fluidRow(
-                                                 column(2,
-                                                        uiOutput("EDteam1")),
-                                                 column(2,
-                                                        uiOutput("EDteam2")),
-                                                 column(2,
-                                                        uiOutput("EDteam3")),
-                                                 column(2,
-                                                        uiOutput("EDteam4")),
-                                                 column(2,
-                                                        uiOutput("EDteam5"))
-                                               )))),
-                                      hr(),
-                                      h6("These are the playtype (all 10) numbers for the teams matched in the 'Playtype Efficiency' tab."),
-                                      reactable::reactableOutput("PTC_PPPtable2"),
-                                      hr(),
-                                      downloadButton('PTC_PPPtabledownload2',"Download data")),
-                             tabPanel("Frequency Data",
-                                      fluidRow(
-                                        column(2,
-                                               h5("Selected Team:", class = "PTCteamtitle"),
-                                               uiOutput("FDselectedteam")),
-                                        column(10,
-                                               h5("Matched Teams:", class = "PTCteamtitle"),
-                                               div(class="matchcenter",
-                                               fluidRow(
-                                                 column(2,
-                                                        uiOutput("FDteam1")),
-                                                 column(2,
-                                                        uiOutput("FDteam2")),
-                                                 column(2,
-                                                        uiOutput("FDteam3")),
-                                                 column(2,
-                                                        uiOutput("FDteam4")),
-                                                 column(2,
-                                                        uiOutput("FDteam5"))
-                                               )))),
-                                      hr(),
-                                      h6("These are the playtype (all 10) numbers for the teams matched in the 'Playtype Frequency' tab."),
-                                      reactable::reactableOutput("PTC_FREQtable2"),
-                                      hr(),
-                                      downloadButton('PTC_FREQtabledownload2',"Download data")),
-                             tabPanel("Percentile Data",
-                                      fluidRow(
-                                        column(2,
-                                               h5("Selected Team:", class = "PTCteamtitle"),
-                                               uiOutput("PDselectedteam")),
-                                        column(10,
-                                               h5("Matched Teams:", class = "PTCteamtitle"),
-                                               div(class="matchcenter",
-                                               fluidRow(
-                                                 column(2,
-                                                        uiOutput("PDteam1")),
-                                                 column(2,
-                                                        uiOutput("PDteam2")),
-                                                 column(2,
-                                                        uiOutput("PDteam3")),
-                                                 column(2,
-                                                        uiOutput("PDteam4")),
-                                                 column(2,
-                                                        uiOutput("PDteam5"))
-                                               )))),
-                                      hr(),
-                                      h6("These are the playtype (all 10) numbers for the teams matched in the 'Playtype Percentile' tab."),
-                                      reactable::reactableOutput("PTC_PERCtable2"),
-                                      hr(),
-                                      downloadButton('PTC_PERCtabledownload2',"Download data")))))),
+                                      reactableOutput("PT_Board"),
+                                      #plotly::plotlyOutput("PTC_PPPplot",
+                                      #             height = "500px",
+                                      #             width = "700px"),
+                                      shiny::hr()
+                                      #reactable::reactableOutput("PT_Board"))#,
+                             # tabPanel("Percentile Data",
+                             #          fluidRow(
+                             #            column(2,
+                             #                   h5("Selected Team:", class = "PTCteamtitle"),
+                             #                   uiOutput("PDselectedteam")),
+                             #            column(10,
+                             #                   h5("Matched Teams:", class = "PTCteamtitle"),
+                             #                   div(class="matchcenter",
+                             #                   fluidRow(
+                             #                     column(2,
+                             #                            uiOutput("PDteam1")),
+                             #                     column(2,
+                             #                            uiOutput("PDteam2")),
+                             #                     column(2,
+                             #                            uiOutput("PDteam3")),
+                             #                     column(2,
+                             #                            uiOutput("PDteam4")),
+                             #                     column(2,
+                             #                            uiOutput("PDteam5"))
+                             #                   )))),
+                             #          hr(),
+                             #          h6("These are the playtype (all 10) numbers for the teams matched in the 'Playtype Percentile' tab."),
+                             #          reactable::reactableOutput("PTC_PERCtable2"),
+                             #          hr(),
+                             #          downloadButton('PTC_PERCtabledownload2',"Download data"))
+                             ))))),
 
       
 
@@ -1014,4 +917,3 @@ ui <- (
     )
   )
 )
-
