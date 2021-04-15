@@ -604,9 +604,10 @@ server <- function(input,output,session){
              Perc75 = Vals75,
              Perc25 = Vals25,
              Floor = Vals0)
-    PTmerge = playerbios %>%
-      inner_join(PTbase, by = c("player" = "PTplayerlist2")) %>%
-      select(player, year,school_team, height_in, draftage, Ceiling, Perc75, Perc25, Floor)
+    PTmerge = PTbase %>%
+      inner_join(playerbios, by = c("PTplayerlist2" = "player")) %>%
+      select(PTplayerlist2, year,school_team, height_in, draftage, Ceiling, Perc75, Perc25, Floor) %>%
+      rename("player" = "PTplayerlist2")
     PTmerge
   })
   
@@ -614,36 +615,72 @@ server <- function(input,output,session){
     PTplottable = PTtable() %>%
       pivot_longer(cols = c(Ceiling, Perc75, Perc25, Floor), names_to = "Outcome", values_to = "Rating")
     
+    PTuniqueplayers = c(unique(PTplottable$player))
     output$PT_Box = renderPlot({
-      PTplottable %>%
+      validate(
+        need(length(unique(PTplottable$player)) >= 3, "Please select 3 or more players.")
+      )
+      PTmainplot = PTplottable %>%
         ggplot(aes(x = player,
                    y = Rating)) +
-        geom_boxplot()
+        geom_boxplot() +
+        scale_y_continuous(limits = c(0,100)) +
+        labs(title = ifelse(paste0(input$PT_Name, input$PT_Twit) != "", 
+                            paste0(toupper(as.character(input$PT_Name)), 
+                                   " (@", 
+                                   as.character(input$PT_Twit), 
+                                   toupper(") Big Board 2021: Percentile Outcomes")),
+                            toupper("Big Board 2021: Percentile Outcomes")),
+             subtitle = paste(PTuniqueplayers, collapse = ", "),
+             x = "",
+             y = "",
+             caption = c(ifelse(paste0(input$PT_Name,input$PT_Twit) != "",paste0("Created by: ", as.character(input$PT_Name), " (@", as.character(input$PT_Twit),")"),""), "Tool by: Gabby Herrera-Lim, CJ Marchesani, Brett Kornfeld")) +
+        theme(plot.caption = element_text(hjust = c(1,0)))
+      PTmainplot
     })
     output$PT_Board = renderReactable({
+      validate(
+        need(length(unique(PTplottable$player)) >= 3, "")
+      )
       reactable(PTtable())
     })
+    output$PT_down = renderUI({
+      validate(
+        need(length(unique(PTplottable$player)) >= 3, "")
+      )
+      downloadButton('PT_DownData','Download Data')
+    })
+    
+    output$PT_DownData = downloadHandler(
+      filename = function() {
+        paste0("betterbigboard-",Sys.Date(),input$PT_Twit,".csv")
+      },
+      
+      content = 
+    )
   })
   
-  
-  
   observeEvent(input$PT_reset,{
+      #Resetting Name Input
+      updateTextInput(session, 'PT_Name', value = "")
+      updateTextInput(session, 'PT_Twit', value = "")
+      
       #Resetting Player Input
-      updateSelectInput(session, 'PT_Player1', selected = "Cade Cunningham")
-      updateSelectInput(session, 'PT_Player2', selected = "Evan Mobley")
-      updateSelectInput(session, 'PT_Player3', selected = "Jalen Green")
-      updateSelectInput(session, 'PT_Player4', selected = "Jalen Suggs")
-      updateSelectInput(session, 'PT_Player5', selected = "Jonathan Kuminga")
-      updateSelectInput(session, 'PT_Player6', selected = "Scottie Barnes")
-      updateSelectInput(session, 'PT_Player7', selected = "Moses Moody")
-      updateSelectInput(session, 'PT_Player8', selected = "Kai Jones")
-      updateSelectInput(session, 'PT_Player9', selected = "Corey Kispert")
-      updateSelectInput(session, 'PT_Player10', selected = "Keon Johnson")
-      updateSelectInput(session, 'PT_Player11', selected = "Davion Mitchell")
-      updateSelectInput(session, 'PT_Player12', selected = "James Bouknight")
-      updateSelectInput(session, 'PT_Player13', selected = "Jaden Springer")
-      updateSelectInput(session, 'PT_Player14', selected = "Ziaire Williams")
-      updateSelectInput(session, 'PT_Player15', selected = "Josh Giddey")
+      updateSelectInput(session, 'PT_Player1', selected = "")
+      updateSelectInput(session, 'PT_Player2', selected = "")
+      updateSelectInput(session, 'PT_Player3', selected = "")
+      updateSelectInput(session, 'PT_Player4', selected = "")
+      updateSelectInput(session, 'PT_Player5', selected = "")
+      updateSelectInput(session, 'PT_Player6', selected = "")
+      updateSelectInput(session, 'PT_Player7', selected = "")
+      updateSelectInput(session, 'PT_Player8', selected = "")
+      updateSelectInput(session, 'PT_Player9', selected = "")
+      updateSelectInput(session, 'PT_Player10', selected = "")
+      updateSelectInput(session, 'PT_Player11', selected = "")
+      updateSelectInput(session, 'PT_Player12', selected = "")
+      updateSelectInput(session, 'PT_Player13', selected = "")
+      updateSelectInput(session, 'PT_Player14', selected = "")
+      updateSelectInput(session, 'PT_Player15', selected = "")
       
       #Resetting Ratings
       updateNumericInput(session, 'PT_P1_100', value = 0)
@@ -716,7 +753,8 @@ server <- function(input,output,session){
       
       })
     })
-    
+  
+  
     
   # # Selected Team - Freq
   # PTCteamfreq = reactive({

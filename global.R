@@ -61,7 +61,5 @@ sampleset = playerbios %>%
          floor = samplefloor) %>%
   pivot_longer(cols = c(ceiling, perc75, perc25, floor), names_to = "perc", values_to = "value")
 
-sampleset %>%
-  ggplot(aes(x = player,
-             y = value)) +
-  geom_boxplot()
+c(unique(sampleset$player))
+paste(c(unique(sampleset$player)), collapse = ", ")

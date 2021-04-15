@@ -382,6 +382,18 @@ ui <- (
                       height: 72vh;
                       scrollbar-color: #cc0000;
                     }
+                    .shiny-output-error {
+                      font-size: 15px;
+                      font-weight: 800;
+                      text-transform: uppercase;
+                      font-family: "Raleway";
+                      padding-top: 200px;
+                    }
+                    #home_page {
+                      background-color: #000000;
+                      height: 1vh;
+                      width: 1vw;
+                    }
                     ')),
     
     
@@ -389,11 +401,12 @@ ui <- (
     theme = NULL,
     navbarPage(
       selected = "Home",
-      title = "BIG BOARD CREATOR",
-      windowTitle = "2021 NBA Draft Big Board Tool | Lockdown Basketball",
+      title = "BETTER BIG BOARD",
+      windowTitle = "2021 NBA Draft Better Big Board | Lockdown Basketball",
       
       ########## UI CODE FOR 'HOME' TAB ##########
       tabPanel("Home",
+               id = "home_page",
                mainPanel(
                  div(id="homepage",
                  #includeHTML("html_pages/home.html")
@@ -401,7 +414,7 @@ ui <- (
                  h1("LOCKDOWN BASKETBALL: 2021 DRAFT TOOL", id="main-head"),
                  h3("TEXT TEXT TEXT", id="main-text"),
                  hr(),
-                 h5("CJ Marchesani [",tags$a(href="https://www.twitter.com/cjmarchesani", target="_blank", "@cjmarchesani"),"]      |      Brett Kornfeld (",tags$a(href="https://www.twitter.com/KornHoops", target="_blank", "@KornHoops"),")      |      Gabby Herrera-Lim (", tags$a(href="https://www.gcherreralim.com", target="_blank", "gcherreralim.com"),")")
+                 h5("Gabby Herrera-Lim (", tags$a(href="https://www.gcherreralim.com", target="_blank", "gcherreralim.com"),") | ", "CJ Marchesani [",tags$a(href="https://www.twitter.com/cjmarchesani", target="_blank", "@cjmarchesani"),"] | Brett Kornfeld (",tags$a(href="https://www.twitter.com/KornHoops", target="_blank", "@KornHoops"),")")
                  )
                )),
       
@@ -445,7 +458,7 @@ ui <- (
       tabPanel("PERCENTILE TOOL",
                div(
                  h1('Board Percentile Visualization Tool'),
-                 h4('This tool is used to visualize your percentile outcomes of any 5 to 15 players.'),
+                 h4('This tool is used to visualize your percentile outcomes of any 3 to 15 players.'),
                  class = "tooltabtitle", id = 'PT_tooltitle'),
                sidebarLayout(
                  sidebarPanel(id = "PT_sidebar",
@@ -458,6 +471,7 @@ ui <- (
                               div(selectInput(inputId = "PT_Player1",
                                              label = "Select your first player",
                                              choices = list(
+                                               "",
                                                "Freshmen" = sort(unique(playerbios$player[playerbios$year == "FR"])),
                                                "Sophomores" = sort(unique(playerbios$player[playerbios$year == "SO"])),
                                                "Juniors" = sort(unique(playerbios$player[playerbios$year == "JR"])),
@@ -465,7 +479,7 @@ ui <- (
                                                "International" = sort(unique(playerbios$player[playerbios$year == "INT"])),
                                                "G-League" = sort(unique(playerbios$player[playerbios$year == "G"]))),
                                              multiple = FALSE,
-                                             selected = ""),
+                                             selected = NULL),
                                   style = "display: inline-block; width: 300px; font-size: 10px; vertical-align: top; padding-right: 20px; text-transform: uppercase;"),
                               div(numericInput(inputId = "PT_P1_100",
                                            label = "CEILING",
@@ -484,6 +498,7 @@ ui <- (
                               div(selectInput(inputId = "PT_Player2",
                                           label = "Select your second player",
                                           choices = list(
+                                            "",
                                             "Freshmen" = sort(unique(playerbios$player[playerbios$year == "FR"])),
                                             "Sophomores" = sort(unique(playerbios$player[playerbios$year == "SO"])),
                                             "Juniors" = sort(unique(playerbios$player[playerbios$year == "JR"])),
@@ -491,7 +506,7 @@ ui <- (
                                             "International" = sort(unique(playerbios$player[playerbios$year == "INT"])),
                                             "G-League" = sort(unique(playerbios$player[playerbios$year == "G"]))),
                                           multiple = FALSE,
-                                          selected = "Evan Mobley"),
+                                          selected = NULL),
                                   style = "display: inline-block; width: 300px; font-size: 10px; vertical-align: top; padding-right: 20px; text-transform: uppercase;"),
                               div(numericInput(inputId = "PT_P2_100",
                                                label = "CEILING",
@@ -510,6 +525,7 @@ ui <- (
                               div(selectInput(inputId = "PT_Player3",
                                           label = "Select your third player",
                                           choices = list(
+                                            "",
                                             "Freshmen" = sort(unique(playerbios$player[playerbios$year == "FR"])),
                                             "Sophomores" = sort(unique(playerbios$player[playerbios$year == "SO"])),
                                             "Juniors" = sort(unique(playerbios$player[playerbios$year == "JR"])),
@@ -517,7 +533,7 @@ ui <- (
                                             "International" = sort(unique(playerbios$player[playerbios$year == "INT"])),
                                             "G-League" = sort(unique(playerbios$player[playerbios$year == "G"]))),
                                           multiple = FALSE,
-                                          selected = "Jalen Green"),
+                                          selected = NULL),
                                   style = "display: inline-block; width: 300px; font-size: 10px; vertical-align: top; padding-right: 20px; text-transform: uppercase;"),
                               div(numericInput(inputId = "PT_P3_100",
                                                label = "CEILING",
@@ -536,6 +552,7 @@ ui <- (
                               div(selectInput(inputId = "PT_Player4",
                                           label = "Select your fourth player",
                                           choices = list(
+                                            "",
                                             "Freshmen" = sort(unique(playerbios$player[playerbios$year == "FR"])),
                                             "Sophomores" = sort(unique(playerbios$player[playerbios$year == "SO"])),
                                             "Juniors" = sort(unique(playerbios$player[playerbios$year == "JR"])),
@@ -543,7 +560,7 @@ ui <- (
                                             "International" = sort(unique(playerbios$player[playerbios$year == "INT"])),
                                             "G-League" = sort(unique(playerbios$player[playerbios$year == "G"]))),
                                           multiple = FALSE,
-                                          selected = "Jalen Suggs"),
+                                          selected = NULL),
                                   style = "display: inline-block; width: 300px; font-size: 10px; vertical-align: top; padding-right: 20px; text-transform: uppercase;"),
                               div(numericInput(inputId = "PT_P4_100",
                                                label = "CEILING",
@@ -562,6 +579,7 @@ ui <- (
                               div(selectInput(inputId = "PT_Player5",
                                           label = "Select your fifth player",
                                           choices = list(
+                                            "",
                                             "Freshmen" = sort(unique(playerbios$player[playerbios$year == "FR"])),
                                             "Sophomores" = sort(unique(playerbios$player[playerbios$year == "SO"])),
                                             "Juniors" = sort(unique(playerbios$player[playerbios$year == "JR"])),
@@ -569,7 +587,7 @@ ui <- (
                                             "International" = sort(unique(playerbios$player[playerbios$year == "INT"])),
                                             "G-League" = sort(unique(playerbios$player[playerbios$year == "G"]))),
                                           multiple = FALSE,
-                                          selected = "Jonathan Kuminga"),
+                                          selected = NULL),
                                   style = "display: inline-block; width: 300px; font-size: 10px; vertical-align: top; padding-right: 20px; text-transform: uppercase;"),
                               div(numericInput(inputId = "PT_P5_100",
                                                label = "CEILING",
@@ -588,6 +606,7 @@ ui <- (
                               div(selectInput(inputId = "PT_Player6",
                                               label = "Select your sixth player",
                                               choices = list(
+                                                "",
                                                 "Freshmen" = sort(unique(playerbios$player[playerbios$year == "FR"])),
                                                 "Sophomores" = sort(unique(playerbios$player[playerbios$year == "SO"])),
                                                 "Juniors" = sort(unique(playerbios$player[playerbios$year == "JR"])),
@@ -595,7 +614,7 @@ ui <- (
                                                 "International" = sort(unique(playerbios$player[playerbios$year == "INT"])),
                                                 "G-League" = sort(unique(playerbios$player[playerbios$year == "G"]))),
                                               multiple = FALSE,
-                                              selected = "Scottie Barnes"),
+                                              selected = NULL),
                                   style = "display: inline-block; width: 300px; font-size: 10px; vertical-align: top; padding-right: 20px; text-transform: uppercase;"),
                               div(numericInput(inputId = "PT_P6_100",
                                                label = "CEILING",
@@ -614,6 +633,7 @@ ui <- (
                               div(selectInput(inputId = "PT_Player7",
                                               label = "Select your seventh player",
                                               choices = list(
+                                                "",
                                                 "Freshmen" = sort(unique(playerbios$player[playerbios$year == "FR"])),
                                                 "Sophomores" = sort(unique(playerbios$player[playerbios$year == "SO"])),
                                                 "Juniors" = sort(unique(playerbios$player[playerbios$year == "JR"])),
@@ -621,7 +641,7 @@ ui <- (
                                                 "International" = sort(unique(playerbios$player[playerbios$year == "INT"])),
                                                 "G-League" = sort(unique(playerbios$player[playerbios$year == "G"]))),
                                               multiple = FALSE,
-                                              selected = "Moses Moody"),
+                                              selected = NULL),
                                   style = "display: inline-block; width: 300px; font-size: 10px; vertical-align: top; padding-right: 20px; text-transform: uppercase;"),
                               div(numericInput(inputId = "PT_P7_100",
                                                label = "CEILING",
@@ -640,6 +660,7 @@ ui <- (
                               div(selectInput(inputId = "PT_Player8",
                                               label = "Select your eighth player",
                                               choices = list(
+                                                "",
                                                 "Freshmen" = sort(unique(playerbios$player[playerbios$year == "FR"])),
                                                 "Sophomores" = sort(unique(playerbios$player[playerbios$year == "SO"])),
                                                 "Juniors" = sort(unique(playerbios$player[playerbios$year == "JR"])),
@@ -647,7 +668,7 @@ ui <- (
                                                 "International" = sort(unique(playerbios$player[playerbios$year == "INT"])),
                                                 "G-League" = sort(unique(playerbios$player[playerbios$year == "G"]))),
                                               multiple = FALSE,
-                                              selected = "Kai Jones"),
+                                              selected = NULL),
                                   style = "display: inline-block; width: 300px; font-size: 10px; vertical-align: top; padding-right: 20px; text-transform: uppercase;"),
                               div(numericInput(inputId = "PT_P8_100",
                                                label = "CEILING",
@@ -666,6 +687,7 @@ ui <- (
                               div(selectInput(inputId = "PT_Player9",
                                               label = "Select your ninth player",
                                               choices = list(
+                                                "",
                                                 "Freshmen" = sort(unique(playerbios$player[playerbios$year == "FR"])),
                                                 "Sophomores" = sort(unique(playerbios$player[playerbios$year == "SO"])),
                                                 "Juniors" = sort(unique(playerbios$player[playerbios$year == "JR"])),
@@ -673,7 +695,7 @@ ui <- (
                                                 "International" = sort(unique(playerbios$player[playerbios$year == "INT"])),
                                                 "G-League" = sort(unique(playerbios$player[playerbios$year == "G"]))),
                                               multiple = FALSE,
-                                              selected = "Corey Kispert"),
+                                              selected = NULL),
                                   style = "display: inline-block; width: 300px; font-size: 10px; vertical-align: top; padding-right: 20px; text-transform: uppercase;"),
                               div(numericInput(inputId = "PT_P9_100",
                                                label = "CEILING",
@@ -692,6 +714,7 @@ ui <- (
                               div(selectInput(inputId = "PT_Player10",
                                               label = "Select your tenth player",
                                               choices = list(
+                                                "",
                                                 "Freshmen" = sort(unique(playerbios$player[playerbios$year == "FR"])),
                                                 "Sophomores" = sort(unique(playerbios$player[playerbios$year == "SO"])),
                                                 "Juniors" = sort(unique(playerbios$player[playerbios$year == "JR"])),
@@ -699,7 +722,7 @@ ui <- (
                                                 "International" = sort(unique(playerbios$player[playerbios$year == "INT"])),
                                                 "G-League" = sort(unique(playerbios$player[playerbios$year == "G"]))),
                                               multiple = FALSE,
-                                              selected = "Keon Johnson"),
+                                              selected = NULL),
                                   style = "display: inline-block; width: 300px; font-size: 10px; vertical-align: top; padding-right: 20px; text-transform: uppercase;"),
                               div(numericInput(inputId = "PT_P10_100",
                                                label = "CEILING",
@@ -718,6 +741,7 @@ ui <- (
                               div(selectInput(inputId = "PT_Player11",
                                               label = "Select your eleventh player",
                                               choices = list(
+                                                "",
                                                 "Freshmen" = sort(unique(playerbios$player[playerbios$year == "FR"])),
                                                 "Sophomores" = sort(unique(playerbios$player[playerbios$year == "SO"])),
                                                 "Juniors" = sort(unique(playerbios$player[playerbios$year == "JR"])),
@@ -725,7 +749,7 @@ ui <- (
                                                 "International" = sort(unique(playerbios$player[playerbios$year == "INT"])),
                                                 "G-League" = sort(unique(playerbios$player[playerbios$year == "G"]))),
                                               multiple = FALSE,
-                                              selected = "Davion Mitchell"),
+                                              selected = NULL),
                                   style = "display: inline-block; width: 300px; font-size: 10px; vertical-align: top; padding-right: 20px; text-transform: uppercase;"),
                               div(numericInput(inputId = "PT_P11_100",
                                                label = "CEILING",
@@ -744,6 +768,7 @@ ui <- (
                               div(selectInput(inputId = "PT_Player12",
                                               label = "Select your twelfth player",
                                               choices = list(
+                                                "",
                                                 "Freshmen" = sort(unique(playerbios$player[playerbios$year == "FR"])),
                                                 "Sophomores" = sort(unique(playerbios$player[playerbios$year == "SO"])),
                                                 "Juniors" = sort(unique(playerbios$player[playerbios$year == "JR"])),
@@ -751,7 +776,7 @@ ui <- (
                                                 "International" = sort(unique(playerbios$player[playerbios$year == "INT"])),
                                                 "G-League" = sort(unique(playerbios$player[playerbios$year == "G"]))),
                                               multiple = FALSE,
-                                              selected = "James Bouknight"),
+                                              selected = NULL),
                                   style = "display: inline-block; width: 300px; font-size: 10px; vertical-align: top; padding-right: 20px; text-transform: uppercase;"),
                               div(numericInput(inputId = "PT_P12_100",
                                                label = "CEILING",
@@ -770,6 +795,7 @@ ui <- (
                               div(selectInput(inputId = "PT_Player13",
                                               label = "Select your thirteenth player",
                                               choices = list(
+                                                "",
                                                 "Freshmen" = sort(unique(playerbios$player[playerbios$year == "FR"])),
                                                 "Sophomores" = sort(unique(playerbios$player[playerbios$year == "SO"])),
                                                 "Juniors" = sort(unique(playerbios$player[playerbios$year == "JR"])),
@@ -777,7 +803,7 @@ ui <- (
                                                 "International" = sort(unique(playerbios$player[playerbios$year == "INT"])),
                                                 "G-League" = sort(unique(playerbios$player[playerbios$year == "G"]))),
                                               multiple = FALSE,
-                                              selected = "Jaden Springer"),
+                                              selected = NULL),
                                   style = "display: inline-block; width: 300px; font-size: 10px; vertical-align: top; padding-right: 20px; text-transform: uppercase;"),
                               div(numericInput(inputId = "PT_P13_100",
                                                label = "CEILING",
@@ -796,6 +822,7 @@ ui <- (
                               div(selectInput(inputId = "PT_Player14",
                                               label = "Select your fourteenth player",
                                               choices = list(
+                                                "",
                                                 "Freshmen" = sort(unique(playerbios$player[playerbios$year == "FR"])),
                                                 "Sophomores" = sort(unique(playerbios$player[playerbios$year == "SO"])),
                                                 "Juniors" = sort(unique(playerbios$player[playerbios$year == "JR"])),
@@ -803,7 +830,7 @@ ui <- (
                                                 "International" = sort(unique(playerbios$player[playerbios$year == "INT"])),
                                                 "G-League" = sort(unique(playerbios$player[playerbios$year == "G"]))),
                                               multiple = FALSE,
-                                              selected = "Ziaire Williams"),
+                                              selected = NULL),
                                   style = "display: inline-block; width: 300px; font-size: 10px; vertical-align: top; padding-right: 20px; text-transform: uppercase;"),
                               div(numericInput(inputId = "PT_P14_100",
                                                label = "CEILING",
@@ -822,6 +849,7 @@ ui <- (
                               div(selectInput(inputId = "PT_Player15",
                                               label = "Select your fifteenth player",
                                               choices = list(
+                                                "",
                                                 "Freshmen" = sort(unique(playerbios$player[playerbios$year == "FR"])),
                                                 "Sophomores" = sort(unique(playerbios$player[playerbios$year == "SO"])),
                                                 "Juniors" = sort(unique(playerbios$player[playerbios$year == "JR"])),
@@ -829,7 +857,7 @@ ui <- (
                                                 "International" = sort(unique(playerbios$player[playerbios$year == "INT"])),
                                                 "G-League" = sort(unique(playerbios$player[playerbios$year == "G"]))),
                                               multiple = FALSE,
-                                              selected = "Josh Giddey"),
+                                              selected = NULL),
                                   style = "display: inline-block; width: 300px; font-size: 10px; vertical-align: top; padding-right: 20px; text-transform: uppercase;"),
                               div(numericInput(inputId = "PT_P15_100",
                                                label = "CEILING",
@@ -845,42 +873,12 @@ ui <- (
                                   style = "display: inline-block; width: 55px; font-size: 10px;")
                               ),
                  mainPanel(width = 8,
-                           tabsetPanel(
-                             tabPanel("Percentile Outcome Boxplot",
-                                      plotOutput("PT_Box"),
-                                      hr(),
-                                      reactableOutput("PT_Board"),
-                                      #plotly::plotlyOutput("PTC_PPPplot",
-                                      #             height = "500px",
-                                      #             width = "700px"),
-                                      shiny::hr()
-                                      #reactable::reactableOutput("PT_Board"))#,
-                             # tabPanel("Percentile Data",
-                             #          fluidRow(
-                             #            column(2,
-                             #                   h5("Selected Team:", class = "PTCteamtitle"),
-                             #                   uiOutput("PDselectedteam")),
-                             #            column(10,
-                             #                   h5("Matched Teams:", class = "PTCteamtitle"),
-                             #                   div(class="matchcenter",
-                             #                   fluidRow(
-                             #                     column(2,
-                             #                            uiOutput("PDteam1")),
-                             #                     column(2,
-                             #                            uiOutput("PDteam2")),
-                             #                     column(2,
-                             #                            uiOutput("PDteam3")),
-                             #                     column(2,
-                             #                            uiOutput("PDteam4")),
-                             #                     column(2,
-                             #                            uiOutput("PDteam5"))
-                             #                   )))),
-                             #          hr(),
-                             #          h6("These are the playtype (all 10) numbers for the teams matched in the 'Playtype Percentile' tab."),
-                             #          reactable::reactableOutput("PTC_PERCtable2"),
-                             #          hr(),
-                             #          downloadButton('PTC_PERCtabledownload2',"Download data"))
-                             ))))),
+                           plotOutput("PT_Box"),
+                           hr(),
+                           reactableOutput("PT_Board"),
+                           hr(),
+                           uiOutput("PT_down")
+                                    ))),
 
       
 
