@@ -624,7 +624,8 @@ server <- function(input,output,session){
         ggplot(aes(x = player,
                    y = Rating)) +
         geom_boxplot() +
-        scale_y_continuous(limits = c(0,100)) +
+        scale_y_continuous(limits = c(0,100),
+                           breaks = seq(0,100,len = 5)) +
         labs(title = ifelse(paste0(input$PT_Name, input$PT_Twit) != "", 
                             paste0(toupper(as.character(input$PT_Name)), 
                                    " (@", 
@@ -634,8 +635,16 @@ server <- function(input,output,session){
              subtitle = paste(PTuniqueplayers, collapse = ", "),
              x = "",
              y = "",
-             caption = c(ifelse(paste0(input$PT_Name,input$PT_Twit) != "",paste0("Created by: ", as.character(input$PT_Name), " (@", as.character(input$PT_Twit),")"),""), "Tool by: Gabby Herrera-Lim, CJ Marchesani, Brett Kornfeld")) +
-        theme(plot.caption = element_text(hjust = c(1,0)))
+             caption = c(ifelse(paste0(input$PT_Name,input$PT_Twit) != "",
+                                paste0("Created by: ", as.character(input$PT_Name), " (@", as.character(input$PT_Twit),")"),
+                                ""),
+                         "Tool by: Gabby Herrera-Lim, CJ Marchesani, Brett Kornfeld")) +
+        theme(plot.caption = element_text(hjust = c(1,0)),
+              text = element_text(color = "#000000",
+                                  face = "bold"),
+              panel.grid.major = element_line(color = "#E4E4E4"),
+              panel.grid.minor = element_line(color = "#E4E4E4"),
+              panel.background = element_blank())
       PTmainplot
     })
     output$PT_Board = renderReactable({
@@ -653,10 +662,16 @@ server <- function(input,output,session){
     
     output$PT_DownData = downloadHandler(
       filename = function() {
-        paste0("betterbigboard-",Sys.Date(),input$PT_Twit,".csv")
+        ifelse(input$PT_Twit == "",
+               paste0("betterbigboard (",Sys.Date(),").csv"),
+               paste0("betterbigboard-",input$PT_Twit," (",Sys.Date(),")",".csv"))
       },
       
-      content = 
+      content = function(file) {
+        PTfinaltable = PTtable()
+        
+        write.csv(PTfinaltable, file)
+      }
     )
   })
   
