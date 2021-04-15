@@ -877,7 +877,8 @@ ui <- (
                            hr(),
                            reactableOutput("PT_Board"),
                            hr(),
-                           uiOutput("PT_down")
+                           div(style = "display: inline-block;", uiOutput("PT_downplot")),
+                           div(style = "display: inline-block;", uiOutput("PT_down"))
                                     ))),
 
       

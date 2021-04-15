@@ -660,6 +660,13 @@ server <- function(input,output,session){
       downloadButton('PT_DownData','Download Data')
     })
     
+    output$PT_downplot = renderUI({
+      validate(
+        need(length(unique(PTplottable$player)) >= 3, "")
+      )
+      downloadButton('PT_DownPlotImg','Download Plot')
+    })
+    
     output$PT_DownData = downloadHandler(
       filename = function() {
         ifelse(input$PT_Twit == "",
