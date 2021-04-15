@@ -624,8 +624,8 @@ server <- function(input,output,session){
         ggplot(aes(x = player,
                    y = Rating)) +
         geom_boxplot() +
-        scale_y_continuous(limits = c(0,100),
-                           breaks = seq(0,100,len = 5)) +
+        scale_y_continuous(breaks = seq(0,100, by = 10),
+                           limits = c(0,100)) +
         labs(title = ifelse(paste0(input$PT_Name, input$PT_Twit) != "", 
                             paste0(toupper(as.character(input$PT_Name)), 
                                    " (@", 
