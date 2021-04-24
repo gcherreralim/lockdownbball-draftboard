@@ -5,8 +5,9 @@ account: gcherreralim
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 3968995
-bundleId: 4513477
+bundleId: 4514485
 url: https://gcherreralim.shinyapps.io/lockdownbball-betterbigboard/
-when: 1619265192.33851
+when: 1619289362.38444
 asMultiple: FALSE
 asStatic: FALSE
+ignoredFiles: 2020-21 College Basketball.xlsx|ringertab.csv

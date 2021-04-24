@@ -170,8 +170,9 @@ ui <- (
                     #WA_tooltitle{
                       background-image: url("WA_head.jpg");
                     }
-                    #MTC_tooltitle{
-                      background-image: url("MTC_head.jpg");
+                    #ABT_tooltabtitle{
+                      background-image: url("about-head.jpg");
+                      height: 20vh;
                     }
                     #PTC_PPPplot{
                       display: block;
@@ -314,30 +315,38 @@ ui <- (
                       text-align: center;
                       padding-bottom: 200px;
                     }
-                    #homepage > h5 > a,
+                    #homepage > h5 > a{
+                      color: #030303;
+                      text-decoration: none;
+                      transition: all 350ms ease-in-out;
+                    }
                     #brett-links>a,
                     #gabby-links>a,
+                    #cj-links>a,
                     #joe-link{
-                      color: #030303;
+                      color: #FFFFFF;
                       text-decoration: none;
                       transition: all 350ms ease-in-out;
                     }
                     #homepage > h5 > a:hover,
                     #brett-links>a:hover,
                     #gabby-links>a:hover,
+                    #cj-links>a:hover,
                     #joe-link:hover{
                       color: #FFF;
                       background-color: #C9082A;
                     }
                     #brett-links,
-                    #gabby-links{
+                    #gabby-links,
+                    #cj-links{
                       margin: 0 auto;
                       text-align: center;
                       padding-top: 10px;
                       padding-bottom: 50px;
                     }
                     #brett-head,
-                    #gabby-head{
+                    #gabby-head,
+                    #cj-head{
                       margin: 0 auto;
                       padding-top: 20px;
                       text-align: center;
@@ -349,7 +358,8 @@ ui <- (
                       text-transform: uppercase;
                     }
                     #brett-text,
-                    #gabby-text{
+                    #gabby-text,
+                    #cj-text{
                       font-size: 16px;
                       width: 80vw;
                       padding-top: 20px;
@@ -360,7 +370,8 @@ ui <- (
                       font-weight: 400;
                     }
                     #brett-pic,
-                    #gabby-pic{
+                    #gabby-pic,
+                    #cj-pic{
                       height: 350px;
                       margin-left: auto;
                       margin-right: auto;
@@ -415,6 +426,12 @@ ui <- (
                     #POT_tiertable{
                       background-image: url("POT_TIERS.jpg");
                     }
+                    .coming-soon > h1{
+                      font-family: "Raleway";
+                      font-size: 300;
+                      font-weight: 600;
+                      color: #b50000;
+                    }
                     ')),
     
     
@@ -447,11 +464,10 @@ ui <- (
       tabPanel("Percentile Outcomes Tool",
                div(
                  h1('Board Percentile Visualization Tool'),
-                 h4('This tool is used to visualize your percentile outcomes of any 3 to 15 players.'),
+                 h4('This tool is used to visualize your percentile outcomes of any 3 to 15 players. Full statistics of our 108-player pool will be completed soon!'),
                  class = "tooltabtitle", id = 'POT_tooltitle'),
                div(
-                 class = "tooldefs", id = "POT_tiertable",
-                 
+                 class = "tooldefs", id = "POT_tiertable"
                ),
                sidebarLayout(
                  sidebarPanel(id = "PT_sidebar",
@@ -867,48 +883,79 @@ ui <- (
                                   style = "display: inline-block; width: 55px; font-size: 10px;")
                               ),
                  mainPanel(width = 8,
-                           plotOutput("PT_Box"),
+                           plotOutput("PT_Box", height = 800),
                            hr(),
                            reactableOutput("PT_Board"),
                            hr(),
-                           div(style = "display: inline-block;", uiOutput("PT_downplot")),
+                           #div(style = "display: inline-block;", uiOutput("PT_downplot")),
                            div(style = "display: inline-block;", uiOutput("PT_down"))
                                     ))),
 
       ########## UI CODE FOR 'FEATURED BOARDS' TAB ##########
-      tabPanel("Featured 2021 Boards",
-               img(src="TOPBOARDS-trial.png", id = "topboards-image"))
+      tabPanel("Featured 2021 Boards [COMING SOON!]",
+               div(
+                 h1('Featured 2021 Boards'),
+                 h4('This tool is used to feature visualized boards created by members of the basketball & draft analysis community. This will be available in a later iteration of this web application.'),
+                 class = "tooltabtitle", id = 'FB_tooltitle'),
+               div(h1('COMING SOON!'),
+                   class = "coming-soon"))
+               #img(src="TOPBOARDS-trial.png", id = "topboards-image"))
+      ,
+      ########## UI CODE FOR 'MULTI-YEAR BOARDS' TAB ##########
+      tabPanel("Multi-Year Boards [COMING SOON!]",
+               div(
+                 h1('Multi-Year Outcome Boards'),
+                 h4('This tool is used to feature visualized comparisons of player outcomes from different draft classes. This will be available in a later iteration of this web application.'),
+                 class = "tooltabtitle", id = 'FB_tooltitle'),
+               div(h1('COMING SOON!'),
+                   class = "coming-soon"))
+      #img(src="TOPBOARDS-trial.png", id = "topboards-image"))
       ,
 
       ########## UI CODE FOR 'ABOUT US' TAB ##########
       tabPanel("About Us",
                mainPanel(
                  div(id="aboutpage",
+                     div(
+                       h1(''),
+                       h4(''),
+                       class = "tooltabtitle", id = 'ABT_tooltabtitle'),
                      #includeHTML("html_pages/home.html")
                      div(id="aboutcontent",
                      img(src="brett-pic.jpg", id="brett-pic"),
                      h1("Brett Kornfeld (concept/structure)", id="brett-head"),
-                     h3("A basketball (and sports in general) junkie in every fashion, Brett received his Master's of Business Analytics  from the Mendoza College of Business at the University of
+                     h3("A basketball (and sports in general) junkie in every fashion, Brett received his Master's of Business Analytics from the Mendoza College of Business at the University of
                         Notre Dame in 2020. A graduate of Indiana University's Kelley School of Business in 2018, Brett is a two-time participant in Larry Coon's Sports Business Classroom at the 
-                        NBA Summer League, specializing in both video/scouting and salary cap. He is actively seeking work in professional or collegiate men's or women's basketball on the analytics 
-                        or operations side.", id="brett-text"),
+                        NBA Summer League, specializing in both video/scouting and salary cap.", id="brett-text"),
                      h5(id="brett-links",
                         tags$a(href="https://www.twitter.com/KornHoops", target="_blank", "@KornHoops"),
                         br(),
                         br(),
                         tags$a(href="mailto:brettkornfeld@gmail.com", target="_blank", "E-mail Brett!")),
                      hr(),
-                     img(src="gabby-pic.JPG", id="gabby-pic"),
+                     img(src="cj-pic.jpg", id="cj-pic"),
+                     h1("CJ Marchesani (concept)", id="cj-head"),
+                     h3("CJ is the creator of Roll Call Sports and NBA Twitter Roll Call. He has experience doing both scouting and analytic projects for D1 men's college basketball teams. 
+                        CJ can usually be found watching basketball, working on one of his many sports-related Excel projects, or trying to learn something new. He is open to opportunities in either 
+                        professional or college sports.", id="cj-text"),
+                     h5(id="cj-links",
+                        tags$a(href="https://www.twitter.com/cjmarchesani", target="_blank", "@cjmarchesani"),
+                        br(),
+                        br(),
+                        tags$a(href="https://www.rollcallsportsnet.com", target="_blank", "Check Out Roll Call Sports!")
+                     ),
+                     hr(),
+                     img(src="gabby-pic.jpg", id="gabby-pic"),
                      h1("Gabby Herrera-Lim (design/app)", id="gabby-head"),
-                     h3("Gabby graduated with degrees in Business Analytics (MS, University of Notre Dame) and Business Administration (BS, University of the Philippines, Diliman). He is currently an
-                        economic analyst at the Asian Development Bank in the Philippines. In his spare time, he loves talking sports (especially basketball), designing content and apps, binging shows, 
+                     h3("Gabby is a full-time sports fan and business analyst, graduating from the University of Notre Dame and the University of the Philippines. In his spare time, he loves talking sports (especially basketball), designing content and apps, binging shows, collecting sportscards,
                         and being a LeBron James apologist.", id="gabby-text"),
                      h5(id="gabby-links",
                         tags$a(href="https://gcherreralim.com", target="_blank", "Portfolio"),
                         br(),
                         br(),
                         tags$a(href="mailto:gcherreralim@alumni.nd.edu", target="_blank", "E-mail Gabby!")
-                     )))
+                     )
+                     ))
                ))
     )
   )

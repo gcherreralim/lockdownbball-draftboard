@@ -48,18 +48,10 @@ playerbios = playerbios %>%
   select(-rank) %>%
   arrange(player)
 
-sampleplayers = c("Cade Cunningham", "Franz Wagner", "Jalen Suggs", "Tre Mann","Scottie Lewis")
-sampleceiling = c(100,85,90, 80, 75)
-sample75 = c(85, 80, 83, 75, 70)
-sample25 = c(60, 40, 55, 35, 40)
-samplefloor = c(55, 30, 40, 20, 15)
-sampleset = playerbios %>%
-  filter(player %in% sampleplayers) %>%
-  mutate(ceiling = sampleceiling,
-         perc75 = sample75,
-         perc25 = sample25,
-         floor = samplefloor) %>%
-  pivot_longer(cols = c(ceiling, perc75, perc25, floor), names_to = "perc", values_to = "value")
+fullstats = read_csv("fullstats.csv") %>%
+  select(-X22,-X23)
 
-c(unique(sampleset$player))
-paste(c(unique(sampleset$player)), collapse = ", ")
+playerbios = playerbios %>%
+  left_join(fullstats, by = c("player" = "Player")) %>%
+  select(-Class,-Team) %>%
+  relocate(c(player, year, school_team, ConfLeague, height_in, birthday, draftage), .before = G)

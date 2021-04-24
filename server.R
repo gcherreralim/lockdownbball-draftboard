@@ -606,8 +606,9 @@ server <- function(input,output,session){
              Floor = Vals0)
     PTmerge = PTbase %>%
       inner_join(playerbios, by = c("PTplayerlist2" = "player")) %>%
-      select(PTplayerlist2, year,school_team, height_in, draftage, Ceiling, Perc75, Perc25, Floor) %>%
-      rename("player" = "PTplayerlist2")
+      select(-birthday) %>%
+      rename("player" = "PTplayerlist2") %>%
+      select(player, year, school_team, ConfLeague, height_in, draftage, everything())
     PTmerge
   })
   
@@ -616,7 +617,10 @@ server <- function(input,output,session){
     PTplottable = PTtable() %>%
       pivot_longer(cols = c(Ceiling, Perc75, Perc25, Floor), names_to = "Outcome", values_to = "Rating")
     
+    PTplottable$player = factor(PTplottable$player, levels = unique(PTplottable$player))
+    
     PTuniqueplayers = c(unique(PTplottable$player))
+    
     output$PT_Box = renderPlot({
       validate(
         need(length(unique(PTplottable$player)) >= 3, "Please select 3 or more players.")
@@ -624,7 +628,31 @@ server <- function(input,output,session){
       PTmainplot = PTplottable %>%
         ggplot(aes(x = player,
                    y = Rating)) +
-        geom_boxplot() +
+        geom_boxplot(aes(fill = year), show.legend = FALSE) +
+        scale_fill_manual(values = c("JR" = "#0049a8",
+                                      "FR" = "#00961c",
+                                      "INT" = "#844da8",
+                                      "SO" = "#ba8809",
+                                      "SR" = "#9c0000",
+                                      "G" = "#474747")) +
+        geom_hline(yintercept = 97, color = "#1e8a00", linetype = "longdash") +
+        geom_hline(yintercept = 93, color = "#1e8a00", linetype = "longdash") +
+        geom_hline(yintercept = 89, color = "#1e8a00", linetype = "longdash") +
+        geom_hline(yintercept = 78, color = "#ba9409", linetype = "longdash") +
+        geom_hline(yintercept = 66, color = "#ba9409", linetype = "longdash") +
+        geom_hline(yintercept = 54, color = "#ba9409", linetype = "longdash") +
+        geom_hline(yintercept = 40, color = "#9e2905", linetype = "longdash") +
+        geom_hline(yintercept = 20, color = "#9e2905", linetype = "longdash") +
+        geom_hline(yintercept = 0, color = "#9e2905", linetype = "longdash") +
+        annotate("text", x = 0.5, y = 97, hjust = 0, vjust = -0.5, label = "All-NBA", size = 4) +
+        annotate("text", x = 0.5, y = 93, hjust = 0, vjust = -0.5, label = "All-Star", size = 4) +
+        annotate("text", x = 0.5, y = 89, hjust = 0, vjust = -0.5, label = "Top 50", size = 4) +
+        annotate("text", x = 0.5, y = 78, hjust = 0, vjust = -0.5, label = "Top 100", size = 4) +
+        annotate("text", x = 0.5, y = 66, hjust = 0, vjust = -0.5, label = "4th-5th Starter", size = 4) +
+        annotate("text", x = 0.5, y = 54, hjust = 0, vjust = -0.5, label = "Early Rotation", size = 4) +
+        annotate("text", x = 0.5, y = 40, hjust = 0, vjust = -0.5, label = "Mid Rotation", size = 4) +
+        annotate("text", x = 0.5, y = 20, hjust = 0, vjust = -0.5, label = "10th-12th Man", size = 4) +
+        annotate("text", x = 0.5, y = 0, hjust = 0, vjust = -0.5, label = "Deep Bench", size = 4) +
         scale_y_continuous(breaks = seq(0,100, by = 10),
                            limits = c(0,100)) +
         labs(title = ifelse(paste0(input$PT_Name, input$PT_Twit) != "", 
@@ -641,6 +669,11 @@ server <- function(input,output,session){
                                 ""),
                          "Tool by: Gabby Herrera-Lim, CJ Marchesani, Brett Kornfeld")) +
         theme(plot.caption = element_text(hjust = c(1,0)),
+              plot.title = element_text(hjust = 0.5,
+                                        size = 15,
+                                        family = "Raleway"),
+              plot.subtitle = element_text(hjust = 0.5,
+                                           size = 13.5),
               text = element_text(color = "#000000",
                                   face = "bold"),
               panel.grid.major = element_line(color = "#E4E4E4"),
@@ -652,7 +685,33 @@ server <- function(input,output,session){
       validate(
         need(length(unique(PTplottable$player)) >= 3, "")
       )
-      reactable(PTtable())
+      PTtable() %>%
+        reactable(sortable = TRUE, searchable = FALSE, pagination = TRUE, defaultPageSize = 15, striped = FALSE, 
+                  theme = reactableTheme(
+                    rowSelectedStyle =list(backgroundColor = "rgba(23, 64, 139, 0.9)", color = "#FFF", fontWeight = "600", boxShadow = "inset 2px 0 0 0 #C9082A")
+                  ),
+                  defaultColDef = colDef(align = "center",
+                                         minWidth = 90),
+                  columns = list(
+                    player = colDef(name = "Player",
+                                    style = "font-weight: 600;",
+                                    minWidth = 100),
+                    year = colDef(name = "YR",
+                                  minWidth = 75),
+                    school_team = colDef(name = "School/Tm",
+                                         minWidth = 100),
+                    ConfLeague = colDef(name = "Conf/Lg"),
+                    height_in = colDef(name = "Height (In)"),
+                    draftage = colDef(name = "Draft Age"),
+                    Ceiling = colDef(style = "background: #005c21; color: #FFFFFF"),
+                    Perc75 = colDef(name = "75th",
+                                    style = "background: #998000; color: #FFFFFF"),
+                    Perc25 = colDef(name = "25th",
+                                    style = "background: #994f00; color: #FFFFFF"),
+                    Floor = colDef(style = "background: #750800; color: #FFFFFF")
+                  ),
+                  showSortIcon = FALSE,
+                  highlight = TRUE)
     })
     output$PT_down = renderUI({
       validate(
@@ -660,7 +719,7 @@ server <- function(input,output,session){
       )
       downloadButton('PT_DownData','Download Data')
     })
-    
+
     output$PT_downplot = renderUI({
       validate(
         need(length(unique(PTplottable$player)) >= 3, "")
@@ -681,7 +740,17 @@ server <- function(input,output,session){
         write.csv(PTfinaltable, file)
       }
     )
-  })
+    output$PT_DownPlotImg = downloadHandler(
+      filename = function() {
+        ifelse(input$PT_Twit == "",
+               paste0("betterbigboard (",Sys.Date(),").png"),
+               paste0("betterbigboard-",input$PT_Twit," (",Sys.Date(),")",".png"))
+      },
+      content = function(file) {
+        device
+      }
+
+  )})
   
   observeEvent(input$PT_reset,{
       #Resetting Name Input
