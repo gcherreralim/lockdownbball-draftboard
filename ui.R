@@ -161,8 +161,8 @@ ui <- (
                       text-align: justify;
                       text-align-last: left;
                     }
-                    #TE_tooltitle{
-                      background-image: url("TE_head.jpg");
+                    #POT_tooltitle{
+                      background-image: url("POT_head.jpg");
                     }
                     #PTC_tooltitle{
                       background-image: url("PTC_head.jpg");
@@ -277,7 +277,7 @@ ui <- (
                       padding-bottom: 60px;
                       margin: 0 auto;
                       text-align: center;
-                      color: #FFF;
+                      color: #030303;
                       font-weight: 400;
                     }
                     #homepage{
@@ -285,7 +285,7 @@ ui <- (
                       margin-top:-20px;
                       width:100vw;
                       height: 100%;
-                      background-color: #030303;
+                      background-color: #FFFFFF;
                     }
                     #aboutpage{
                       margin-left: -2.5vw;
@@ -295,7 +295,8 @@ ui <- (
                       background-color: #030303;
                     }
                     #main-image{
-                      width: 102vw;
+                      width: 100vw;
+                      align: center;
                     }
                     #main-head{
                       margin: 0 auto;
@@ -304,11 +305,11 @@ ui <- (
                       font-size: 50px;
                       font-family: "Raleway";
                       font-weight: 800;
-                      color: #FFF;
+                      color: #030303;
                       letter-spacing: 2px;
                     }
                     #homepage > h5{
-                      color: #FFF;
+                      color: #030303;
                       margin: 0 auto;
                       text-align: center;
                       padding-bottom: 200px;
@@ -317,7 +318,7 @@ ui <- (
                     #brett-links>a,
                     #gabby-links>a,
                     #joe-link{
-                      color: #FFF;
+                      color: #030303;
                       text-decoration: none;
                       transition: all 350ms ease-in-out;
                     }
@@ -325,7 +326,8 @@ ui <- (
                     #brett-links>a:hover,
                     #gabby-links>a:hover,
                     #joe-link:hover{
-                      color: #C9082A;
+                      color: #FFF;
+                      background-color: #C9082A;
                     }
                     #brett-links,
                     #gabby-links{
@@ -368,7 +370,7 @@ ui <- (
                     #tab-5883-3 > div.row > div.col-sm-2 > form > div:nth-child(2){
                       display:inline-block;
                     }
-                    #PT_Name, #PT_Twit {
+                    #PT_Name, #PT_Twit, #PT_Caption {
                       font-size: 10px;
                     }
                     [type = "number"] {
@@ -379,7 +381,7 @@ ui <- (
                     }
                     #PT_sidebar {
                       overflow: auto;
-                      height: 72vh;
+                      height: 65vh;
                       scrollbar-color: #cc0000;
                     }
                     .shiny-output-error {
@@ -394,6 +396,25 @@ ui <- (
                       height: 1vh;
                       width: 1vw;
                     }
+                    #topboards-image{
+                      margin-left: -1.52vw;
+                      margin-top: -1.6vh;
+                      width: 100vw;
+                    }
+                    .tooldefs {
+                      background: #030303;
+                      width: 100.1vw;
+                      margin-top: -2vh;
+                      margin-left: -1.65vw;
+                      padding: 40px;
+                      margin-bottom: 2vh;
+                      background-size: cover;
+                      background-repeat: no-repeat;
+                      background-position: right;
+                    }
+                    #POT_tiertable{
+                      background-image: url("POT_TIERS.jpg");
+                    }
                     ')),
     
     
@@ -401,7 +422,7 @@ ui <- (
     theme = NULL,
     navbarPage(
       selected = "Home",
-      title = "BETTER BIG BOARD",
+      title = "BETTER BIG BOARD",#div(img(src="logo-white.png","BETTER BIG BOARD"), style = "height: 500px;"),
       windowTitle = "2021 NBA Draft Better Big Board | Lockdown Basketball",
       
       ########## UI CODE FOR 'HOME' TAB ##########
@@ -410,61 +431,34 @@ ui <- (
                mainPanel(
                  div(id="homepage",
                  #includeHTML("html_pages/home.html")
-                 img(src="home-head.jpg", id="main-image"),
-                 h1("LOCKDOWN BASKETBALL: 2021 DRAFT TOOL", id="main-head"),
-                 h3("TEXT TEXT TEXT", id="main-text"),
+                 img(src="home.png", id="main-image"),
+                 h1("LOCKDOWN BASKETBALL: BETTER BIG BOARD 2021", id="main-head"),
+                 h3("A Shiny application that better captures the nuances of prospect grades and ranges of outcomes amongst players entering the 2021 NBA Draft.", id="main-text"),
                  hr(),
-                 h5("Gabby Herrera-Lim (", tags$a(href="https://www.gcherreralim.com", target="_blank", "gcherreralim.com"),") | ", "CJ Marchesani [",tags$a(href="https://www.twitter.com/cjmarchesani", target="_blank", "@cjmarchesani"),"] | Brett Kornfeld (",tags$a(href="https://www.twitter.com/KornHoops", target="_blank", "@KornHoops"),")")
+                 h5("Gabby Herrera-Lim [",
+                    tags$a(href = "https://www.twitter.com/gabbyherreralim", target = "_blank", "@gabbyherreralim")," / ", 
+                    tags$a(href="https://www.gcherreralim.com", target="_blank", "gcherreralim.com"),"]",HTML('&nbsp;'),HTML('&nbsp;'),"|",HTML('&nbsp;'),HTML('&nbsp;'), "CJ Marchesani [",tags$a(href="https://www.twitter.com/cjmarchesani", target="_blank", "@cjmarchesani"),
+                    "]",HTML('&nbsp;'),HTML('&nbsp;'),"|",HTML('&nbsp;'),HTML('&nbsp;')," Brett Kornfeld [",tags$a(href="https://www.twitter.com/KornHoops", target="_blank", "@KornHoops"),"]")
                  )
                )),
       
-      ########## UI CODE FOR 'FEATURED BOARDS' TAB ##########
-      tabPanel("Featured 2021 Boards",
-               # div(
-               #  h1('FEATURED 2021 BOARDS'),
-               #  h4('Take a look at ------------------'),
-               #  class = "tooltabtitle", id = 'TE_tooltitle'),
-               # sidebarPanel(width = 2,
-               #              selectizeInput(
-               #                inputId = "TEteams",
-               #                label = "Select up to 10 teams:",
-               #                choices = list(
-               #                  "2015 - 2016" = sort(unique(genteams$TeamCode[genteams$Season == 2016])),
-               #                  "2016 - 2017" = sort(unique(genteams$TeamCode[genteams$Season == 2017])),
-               #                  "2017 - 2018" = sort(unique(genteams$TeamCode[genteams$Season == 2018])),
-               #                  "2018 - 2019" = sort(unique(genteams$TeamCode[genteams$Season == 2019])),
-               #                  "2019 - 2020" = sort(unique(genteams$TeamCode[genteams$Season == 2020]))),
-               #                multiple = TRUE,
-               #                selected = NULL,
-               #                options = list(maxItems = 10)),
-               #              shiny::br(),
-               #              varSelectInput("TExaxis", "X-Axis Variable", genteams[,7:36], selected="oEFF"),
-               #              varSelectInput("TEyaxis", "Y-Axis Variable", genteams[,7:36], selected="WinPerc"),
-               #              checkboxInput("TEall", "Show all teams", FALSE),
-               #              actionButton("TE_reset", "Reset")),
-               # mainPanel(width = 10,
-               #   shiny::textOutput("TEChartTitle"),
-               #   shiny::plotOutput("TEChart"),
-               #   reactable::reactableOutput("TEtable"),
-               #   br(),
-               #   br(),
-               #   div(style="display: inline-block; vertical-align: top; width: 200px; margin: 0 auto;",uiOutput("TE_plotdownappear"))
-               # )
-               )
-      ,
-      
       
       ########## UI CODE FOR 'PERCENTILE TOOL' TAB ##########
-      tabPanel("PERCENTILE TOOL",
+      tabPanel("Percentile Outcomes Tool",
                div(
                  h1('Board Percentile Visualization Tool'),
                  h4('This tool is used to visualize your percentile outcomes of any 3 to 15 players.'),
-                 class = "tooltabtitle", id = 'PT_tooltitle'),
+                 class = "tooltabtitle", id = 'POT_tooltitle'),
+               div(
+                 class = "tooldefs", id = "POT_tiertable",
+                 
+               ),
                sidebarLayout(
                  sidebarPanel(id = "PT_sidebar",
                               width = 4,
                               div(style = "display: inline-block; vertical-align: top; width: 160px; padding-right: 20px; font-size: 10px;", textInput(inputId = "PT_Name", label = "Name:", value = "")),
                               div(style = "display: inline-block; vertical-align: top; width: 160px; padding-right: 20px; font-size: 10px;", textInput(inputId = "PT_Twit", label = "Twitter User:", value = "")),
+                              div(style = "vertical-align: top; width: 550px; padding-right: 20px; font-size: 10px;", textInput(inputId = "PT_Caption", label = "Caption:", value = "")),
                               div(style = "display: inline-block; vertical-align: bottom;", actionButton("PT_submit", "Submit")),
                               div(style = "display: inline-block; vertical-align: bottom;", actionButton("PT_reset", "Reset")),
                               hr(),
@@ -881,7 +875,10 @@ ui <- (
                            div(style = "display: inline-block;", uiOutput("PT_down"))
                                     ))),
 
-      
+      ########## UI CODE FOR 'FEATURED BOARDS' TAB ##########
+      tabPanel("Featured 2021 Boards",
+               img(src="TOPBOARDS-trial.png", id = "topboards-image"))
+      ,
 
       ########## UI CODE FOR 'ABOUT US' TAB ##########
       tabPanel("About Us",

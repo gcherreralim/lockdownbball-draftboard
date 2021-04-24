@@ -612,6 +612,7 @@ server <- function(input,output,session){
   })
   
   observeEvent(input$PT_submit, {
+    
     PTplottable = PTtable() %>%
       pivot_longer(cols = c(Ceiling, Perc75, Perc25, Floor), names_to = "Outcome", values_to = "Rating")
     
@@ -632,7 +633,7 @@ server <- function(input,output,session){
                                    as.character(input$PT_Twit), 
                                    toupper(") Big Board 2021: Percentile Outcomes")),
                             toupper("Big Board 2021: Percentile Outcomes")),
-             subtitle = paste(PTuniqueplayers, collapse = ", "),
+             subtitle = as.character(input$PT_Caption),
              x = "",
              y = "",
              caption = c(ifelse(paste0(input$PT_Name,input$PT_Twit) != "",
